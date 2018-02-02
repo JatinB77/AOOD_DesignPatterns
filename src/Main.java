@@ -16,6 +16,8 @@ public class Main {
         List<DisplayElement> displays = new ArrayList<>();
         displays.add(new CurrentConditionsDisplay());
         displays.add(new StatisticsDisplay());
+        displays.add(new ForecastDisplay());
+        displays.add(new HeatIndexDisplay());
         return displays;
     }
 }
