@@ -1,22 +1,24 @@
 import java.util.*;
 
-public class ForecastDisplay implements Observer, DisplayElement {
-	private float currentPressure = 29.92f;  
+@Observer
+public class ForecastDisplay implements DisplayElement {
+	private float currentPressure;  
 	private float lastPressure;
-	private WeatherData weatherData;
 
-	public ForecastDisplay(WeatherData weatherData) {
-		this.weatherData = weatherData;
-		weatherData.registerObserver(this);
+	public ForecastDisplay() {
+		currentPressure = 0.0f;
+		lastPressure = 0.0f;
 	}
-
-	public void update(float temp, float humidity, float pressure) {
+	
+	@Update
+	public void update(WeatherData data) {
                 lastPressure = currentPressure;
-		currentPressure = pressure;
+		currentPressure = data.getPressure();
 
 		display();
 	}
 
+	@Override
 	public void display() {
 		System.out.print("Forecast: ");
 		if (currentPressure > lastPressure) {
