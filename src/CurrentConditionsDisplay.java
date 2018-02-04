@@ -13,6 +13,7 @@ public class CurrentConditionsDisplay implements DisplayElement {
     public void updateReadings(WeatherData data) {
         temperature = data.getTemperature();
         humidity = data.getHumidity();
+        display();
     }
 
     @Override
