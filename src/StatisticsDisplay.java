@@ -11,11 +11,11 @@ public class StatisticsDisplay implements DisplayElement {
     private int tempReadings;
 
     public StatisticsDisplay() {
-        maxTemp = 0.0f;
-        minTemp = 0.0f;
+        maxPressure = Float.MIN_VALUE;
+        maxTemp = Float.MIN_VALUE;
+        minTemp = Float.MAX_VALUE;
         tempSum = 0.0f;
-        maxPressure = 0.0f;
-        numReadings = 0;
+        tempReadings = 0;
     }
 
     /**

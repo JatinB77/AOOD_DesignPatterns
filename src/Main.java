@@ -10,8 +10,14 @@ public class Main {
         WeatherStation station = new WeatherStation();
         List<DisplayElement> displays = getDisplays();
 
-        station.update(75.0f, 64.5f, 20.2f);
+        displays.forEach(d -> station.addListener(d));
 
+        station.update(75.0f, 64.5f, 20.2f);
+        displays.forEach(d -> d.display());
+
+        System.out.println();
+
+        station.update(56.3f, 22.0f, 65.9f);
         displays.forEach(d -> d.display());
     }
 

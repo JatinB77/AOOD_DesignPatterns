@@ -11,8 +11,11 @@ public class WeatherStation {
         data = new WeatherData();
     }
 
-    public void update(float temperature, float humidity, float pressure)
-    {
+    public void addListener(Object listener) {
+        manager.addListener(listener);
+    }
+
+    public void update(float temperature, float humidity, float pressure) {
         data.setTemperature(temperature)
             .setHumidity(humidity)
             .setPressure(pressure);
