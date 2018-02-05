@@ -1,3 +1,6 @@
+/**
+ * Subject class
+ */
 public class WeatherStation {
 
     private Manager manager;
@@ -8,11 +11,13 @@ public class WeatherStation {
         data = new WeatherData();
     }
 
-    public void update(float temperature, float humidity, float pressure) {
+    public void update(float temperature, float humidity, float pressure)
+    {
         data.setTemperature(temperature)
             .setHumidity(humidity)
             .setPressure(pressure);
 
+        // Subject publishing info (data) to the "middleman" (manager)
         manager.publish(data);
     }
 }

@@ -1,3 +1,6 @@
+/**
+ * This class is meant to be used as an Observer
+ */
 @Observer
 public class StatisticsDisplay implements DisplayElement {
 
@@ -15,6 +18,11 @@ public class StatisticsDisplay implements DisplayElement {
         numReadings = 0;
     }
 
+    /**
+     * (method of this Observer) which will be called when Subjects (WeatherStation) publish info.
+     * updates temperature fields
+     * @param data
+     */
     @Update
     public void updateTemperature(WeatherData data) {
         float temp = data.getTemperature();
@@ -29,6 +37,11 @@ public class StatisticsDisplay implements DisplayElement {
             minTemp = temp;
     }
 
+    /**
+     * (method of this Observer) which will be called when Subjects (WeatherStation) publish info.
+     * updates maxPressure field
+     * @param data
+     */
     @Update
     public void updatePressure(WeatherData data) {
         float pressure = data.getPressure();

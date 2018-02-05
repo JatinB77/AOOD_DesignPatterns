@@ -1,3 +1,6 @@
+/**
+ * This class is meant to be used as an Observer
+ */
 @Observer
 public class CurrentConditionsDisplay implements DisplayElement {
 
@@ -9,6 +12,11 @@ public class CurrentConditionsDisplay implements DisplayElement {
         humidity = 0.0f;
     }
 
+    /**
+     * (method of this Observer) which will be called when Subjects (WeatherStation) publish info.
+     * sets temp and humidity based on passed readings from WeatherData object, then calls display()
+     * @param data
+     */
     @Update
     public void updateReadings(WeatherData data) {
         temperature = data.getTemperature();

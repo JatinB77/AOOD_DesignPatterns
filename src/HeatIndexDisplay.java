@@ -1,5 +1,8 @@
 import java.util.*;
 
+/**
+ * This class is meant to be used as an Observer
+ */
 @Observer
 class HeatIndexDisplay implements DisplayElement {
 	float heatIndex;
@@ -8,6 +11,11 @@ class HeatIndexDisplay implements DisplayElement {
 		heatIndex = 0.0f;
 	}
 
+	/**
+	 * (method of this Observer) which will be called when Subjects (WeatherStation) publish info.
+	 * sets heatIndex field, then calls display() to print heatIndex value
+	 * @param data
+	 */
 	@Update
 	public void update(WeatherData data) {
 		heatIndex = computeHeatIndex(data.getTemperature(), data.getHumidity());

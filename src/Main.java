@@ -1,6 +1,9 @@
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Driver class for Observer Pattern: indirect coupling between Observers and Subjects
+ */
 public class Main {
 
     public static void main(String[] args) {

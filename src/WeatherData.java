@@ -1,3 +1,6 @@
+/**
+ * WeatherData class has and maintains the temp, humidity, and pressure
+ */
 public class WeatherData {
 
     private float temperature;

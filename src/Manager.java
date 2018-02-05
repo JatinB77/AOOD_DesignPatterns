@@ -1,3 +1,7 @@
+/**
+ * Serves as the "middleman" class between Observer and Subjects to have indirect coupling between them
+ */
+
 import java.util.ArrayList;
 import java.lang.reflect.Method;
 import java.lang.annotation.Target;
@@ -15,12 +19,19 @@ public class Manager {
     private ArrayList listeners;
 
     public void publish(Object data) {
-        for (Object potentialListener : listeners) {
+        for (Object potentialListener : listeners)
+        {
+            // get the class of every listener in the ArrayList
             Class<?> listenerClass = potentialListener.getClass();
-            for (Method m : listenerClass.getDeclaredMethods()) {
-                if (m.getAnnotation(UpdateMethod.class) != null) {
+            for (Method m : listenerClass.getDeclaredMethods())
+            {
+                // check if each method in said class has the "@Update" annotation
+                if (m.getAnnotation(UpdateMethod.class) != null)
+                {
+                    // get the parameters of the current annotated method
                     Class<?>[] parameters = m.getParameterTypes();
-                    if (parameters.length == 1 && parameters[0].isAssignableFrom(data.getClass())) {
+                    if (parameters.length == 1 && parameters[0].isAssignableFrom(data.getClass()))
+                    {
                         try {
                             m.setAccessible(true);
                             m.invoke(potentialListener, data);
@@ -28,7 +39,7 @@ public class Manager {
                             Throwable cause = x.getCause();
                             throw cause;
                         }
-                    } 
+                    }
                 }
             }
         }

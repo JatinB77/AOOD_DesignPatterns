@@ -1,5 +1,7 @@
 import java.util.*;
-
+/**
+ * This class is meant to be used as an Observer
+ */
 @Observer
 public class ForecastDisplay implements DisplayElement {
 	private float currentPressure;  
@@ -9,7 +11,12 @@ public class ForecastDisplay implements DisplayElement {
 		currentPressure = 0.0f;
 		lastPressure = 0.0f;
 	}
-	
+
+	/**
+	 * (method of this Observer) which will be called when Subjects (WeatherStation) publish info.
+	 * updates the new pressure and the prior pressure amount, then calls display()
+	 * @param data
+	 */
 	@Update
 	public void update(WeatherData data) {
                 lastPressure = currentPressure;
