@@ -16,7 +16,7 @@ public class Manager {
             Class<?> listenerClass = potentialListener.getClass();
             for (Method m : listenerClass.getDeclaredMethods()) {
                 // check if each method in said class has the "@Update" annotation
-                if (m.getAnnotation(UpdateMethod.class) != null) {
+                if (m.getAnnotation(Update.class) != null) {
                     // get the parameters of the current annotated method
                     Class<?>[] parameters = m.getParameterTypes();
                     if (parameters.length == 1 && parameters[0].isAssignableFrom(data.getClass())) {
