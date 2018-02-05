@@ -11,8 +11,7 @@ public class Manager {
     private ArrayList<Object> listeners = new ArrayList<>();
 
     public void publish(Object data) {
-        for (Object potentialListener : listeners)
-        {
+        for (Object potentialListener : listeners) {
             // get the class of every listener in the ArrayList
             Class<?> listenerClass = potentialListener.getClass();
             for (Method m : listenerClass.getDeclaredMethods()) {
@@ -44,6 +43,5 @@ public class Manager {
         } else {
             throw new IllegalArgumentException("Listener object must have Observer annotation.");
         }
-
     }
 }
