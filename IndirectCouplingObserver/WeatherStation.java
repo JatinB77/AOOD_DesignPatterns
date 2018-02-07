@@ -16,10 +16,7 @@ public class WeatherStation {
     }
 
     public void update(float temperature, float humidity, float pressure) {
-        data.setTemperature(temperature)
-            .setHumidity(humidity)
-            .setPressure(pressure);
-
+        data=new WeatherData(temperature,humidity,pressure);
         // Subject publishing info (data) to the "middleman" (manager)
         manager.publish(data);
     }
