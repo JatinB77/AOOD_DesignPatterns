@@ -1,4 +1,4 @@
-package headfirst.designpatterns.factory.pizzaaf;
+package aood.pizza;
 
 public interface Veggies {
 	public String toString();

@@ -1,4 +1,4 @@
-package headfirst.designpatterns.factory.pizzaaf;
+package aood.pizza;
 
 public class ClamPizza extends Pizza {
 	PizzaIngredientFactory ingredientFactory;
