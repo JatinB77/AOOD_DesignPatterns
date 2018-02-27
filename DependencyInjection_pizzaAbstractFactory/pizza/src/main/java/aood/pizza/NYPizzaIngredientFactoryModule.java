@@ -9,7 +9,7 @@ import javax.inject.Singleton;
 public class NYPizzaIngredientFactoryModule {
     @Provides
     @Singleton
-    NYPizzaIngredientFactory provideFactory() {
+    PizzaIngredientFactory provideFactory() {
         return new NYPizzaIngredientFactory();
     }
 }
