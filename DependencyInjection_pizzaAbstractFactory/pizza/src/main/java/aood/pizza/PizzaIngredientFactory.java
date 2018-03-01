@@ -1,5 +1,8 @@
 package aood.pizza;
 
+import javax.inject.Singleton;
+
+@Singleton
 public interface PizzaIngredientFactory {
  
 	public Dough createDough();
@@ -10,5 +13,4 @@ public interface PizzaIngredientFactory {
 	public Clams createClam();
 
 	String getName();
-
 }
