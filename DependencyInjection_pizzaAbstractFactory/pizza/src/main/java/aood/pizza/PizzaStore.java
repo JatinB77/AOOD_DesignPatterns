@@ -7,6 +7,14 @@ public class PizzaStore {
 	@Inject
 	PizzaIngredientFactory factory;
 
+	public PizzaStore(){
+		DaggerPizzaStoreComponent
+			.builder()
+			.build()
+			.inject(this);
+	}
+	
+
 	private Pizza createPizza(String item){
 		Pizza pizza=null;
 		if(item.equals("cheese")){
