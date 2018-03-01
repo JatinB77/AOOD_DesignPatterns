@@ -30,4 +30,8 @@ public class ChicagoPizzaIngredientFactory
 	public Clams createClam() {
 		return new FrozenClams();
 	}
+
+	public String getName() {
+		return "Chicago";
+	}
 }
