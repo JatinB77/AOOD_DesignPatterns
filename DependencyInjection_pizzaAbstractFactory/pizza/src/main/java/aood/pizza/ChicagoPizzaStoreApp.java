@@ -1,9 +1,9 @@
 package aood.pizza;
 
-public class NYPizzaStoreApp {
+public class ChicagoPizzaStoreApp {
     public static void main(String[] args) {
         PizzaStore store = new PizzaStore();
-        DaggerNYPizzaIngredientFactoryComponent.builder().build().inject(store);
+        DaggerChicagoPizzaIngredientFactoryComponent.builder().build().inject(store);
         Pizza pizza = store.orderPizza("cheese");
         System.out.println(pizza.toString());
         pizza = store.orderPizza("clam");

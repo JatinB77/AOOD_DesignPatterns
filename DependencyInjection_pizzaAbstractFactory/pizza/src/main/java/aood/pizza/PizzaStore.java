@@ -8,10 +8,6 @@ public class PizzaStore {
 	PizzaIngredientFactory factory;
 
 	public PizzaStore(){
-		DaggerPizzaStoreComponent
-			.builder()
-			.build()
-			.inject(this);
 	}
 	
 
