@@ -28,4 +28,8 @@ public class NYPizzaIngredientFactory implements PizzaIngredientFactory {
 	public Clams createClam() {
 		return new FreshClams();
 	}
+
+	public String getName() {
+		return "New York";
+	}
 }
