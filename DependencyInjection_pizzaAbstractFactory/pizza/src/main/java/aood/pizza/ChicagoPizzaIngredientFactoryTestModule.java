@@ -15,14 +15,30 @@ public class ChicagoPizzaIngredientFactoryTestModule {
     @Provides
     @Singleton
     PizzaIngredientFactory provideFactory() {
-        PizzaIngredientFactory pizzaIngredFact = mock(PizzaIngredientFactory.class);
+        PizzaIngredientFactory pizzaIngredFact = mock(ChicagoPizzaIngredientFactory.class);
+
+        when(pizzaIngredFact.createCheese()).thenReturn( new Cheese() {
+            @Override
+            public String toString() {
+                return "I can't believe it's not cheese.";
+            }
+        });
+
+        when(pizzaIngredFact.createSauce()).thenReturn(new Sauce() {
+            @Override
+            public String toString() {
+                return "Spicy Pasta Sauce.";
+            }
+        });
+
+        /*
         Cheese cheese = mock(Cheese.class);
-        when(cheese.toString()).thenReturn("Plain Cheese");
-
         Dough dough = mock(Dough.class);
-
+        when(cheese.toString()).thenReturn("Plain Cheese");
         when(pizzaIngredFact.createCheese()).thenReturn(cheese.toString());
+        */
 
+        return pizzaIngredFact;
     }
 
 }
