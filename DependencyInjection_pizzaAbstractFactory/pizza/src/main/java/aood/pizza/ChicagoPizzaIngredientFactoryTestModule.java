@@ -8,6 +8,7 @@ import javax.inject.Singleton;
 /**
  * Created by Jatin on 3/1/2018.
  */
+@Module
 public class ChicagoPizzaIngredientFactoryTestModule {
 
     // Provides a mocked PizzaIngredientFactory instance
