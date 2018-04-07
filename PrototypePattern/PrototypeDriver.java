@@ -1,5 +1,7 @@
 package proto;
-
+/**
+ * @author Jatin Bhakta, Eric Lynn, Gene Koval, Stan Genov, Johan Burke
+ */
 public class PrototypeDriver {
 
     public static void main(String[] args) throws CloneNotSupportedException{
