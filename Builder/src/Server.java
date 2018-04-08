@@ -1,32 +1,68 @@
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.io.IOException;
-import java.io.OutputStream;
+import java.lang.reflect.Method;
 import java.net.InetSocketAddress;
+import java.util.function.Supplier;
 
 import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 
 public class Server {
 
+    private static final int port = 8000;
+    private static BufferedReader stdin = new BufferedReader(
+        new InputStreamReader(System.in));
+
     public static void main(String... args) throws IOException {
         HttpServer server = HttpServer.create(
-            new InetSocketAddress("localhost", 8000), 0);
+            new InetSocketAddress("localhost", port), 0);
 
-        server.createContext("/test", new MyHandler());
+        assignContext(server, new Resource());
+
         server.setExecutor(null);
 
         server.start();
-        System.out.println("Server started");
+        System.out.println("Server running on http://localhost:" + port);
+
+        String command = "";
+        while (!command.equals("quit"))
+            command = stdin.readLine().trim();
+
+        server.stop(0);
     }
 
-    static class MyHandler implements HttpHandler {
-        @Override
-        public void handle(HttpExchange t) throws IOException {
-            String response = "This is the response";
-            t.sendResponseHeaders(200, response.length());
-            OutputStream os = t.getResponseBody();
-            os.write(response.getBytes());
-            os.close();
+    private static void log(HttpExchange ex) {
+        System.out.println(String.format(
+            "[%s] %s", ex.getRequestMethod(), ex.getRequestURI()));
+    }
+
+    private static void handleExchange(HttpExchange ex, Response res) throws IOException {
+        log(ex);
+
+        ex.sendResponseHeaders(res.getStatus(), res.getLength());
+        ex.getResponseHeaders().putAll(res.getHeaders());
+        ex.getResponseBody().write(res.getEntity().getBytes());
+        ex.close();
+    }
+
+    private static void assignContext(HttpServer server, Resource resource) {
+        Method[] methods = resource.getClass().getMethods();
+
+        for (Method method : methods) {
+            Path path = method.getAnnotation(Path.class);
+
+            if (path != null && method.getReturnType().equals(Response.class))
+                server.createContext(path.value(), exchange -> {
+                    Response res = null;
+                    try {
+                        res = (Response) method.invoke(resource);
+                    }
+                    catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                    handleExchange(exchange, res);
+                });
         }
     }
 }
