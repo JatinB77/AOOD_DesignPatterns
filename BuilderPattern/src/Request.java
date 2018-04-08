@@ -6,6 +6,9 @@ import java.util.stream.Collectors;
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 
+/**
+ * Represents a simple HTTP request received from a client.
+ */
 public class Request {
 
     private Headers headers;
@@ -28,7 +31,7 @@ public class Request {
         return headers;
     }
 
-    public String getMethod() {
+    public String getRequestMethod() {
         return method;
     }
 
