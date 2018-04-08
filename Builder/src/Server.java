@@ -19,16 +19,12 @@ public class Server {
             new InetSocketAddress("localhost", port), 0);
 
         assignContext(server, new Resource());
-
         server.setExecutor(null);
 
         server.start();
         System.out.println("Server running on http://localhost:" + port);
 
-        String command = "";
-        while (!command.equals("quit"))
-            command = stdin.readLine().trim();
-
+        while (stdin.readLine() != null);
         server.stop(0);
     }
 
@@ -37,11 +33,18 @@ public class Server {
             "[%s] %s", ex.getRequestMethod(), ex.getRequestURI()));
     }
 
-    private static void handleExchange(HttpExchange ex, Response res) throws IOException {
+    private static void handleExchange(HttpExchange ex, Response res)
+            throws IOException {
         log(ex);
 
-        ex.sendResponseHeaders(res.getStatus(), res.getLength());
+        if (res == null)
+            res = Response
+                .serverError()
+                .entity("Server error: no response")
+                .build();
+
         ex.getResponseHeaders().putAll(res.getHeaders());
+        ex.sendResponseHeaders(res.getStatus(), res.getLength());
         ex.getResponseBody().write(res.getEntity().getBytes());
         ex.close();
     }
@@ -56,7 +59,8 @@ public class Server {
                 server.createContext(path.value(), exchange -> {
                     Response res = null;
                     try {
-                        res = (Response) method.invoke(resource);
+                        res = (Response) method.invoke(resource,
+                            new Request(exchange));
                     }
                     catch (Exception ex) {
                         ex.printStackTrace();

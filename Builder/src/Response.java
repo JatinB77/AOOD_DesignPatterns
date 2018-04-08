@@ -7,6 +7,7 @@ public class Response {
     public static enum Status {
         OK (200),
         UNAUTHORIZED (401),
+        FILE_NOT_FOUND (404),
         INTERNAL_SERVER_ERROR (500);
 
         private final int code;
@@ -62,7 +63,7 @@ public class Response {
         }
 
         public Builder type(String type) {
-            headers.add("Content-Type", type);
+            headers.add("Content-type", type);
             return this;
         }
     }
