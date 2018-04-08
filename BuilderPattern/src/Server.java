@@ -45,7 +45,7 @@ public class Server {
 
         ex.getResponseHeaders().putAll(res.getHeaders());
         ex.sendResponseHeaders(res.getStatus(), res.getLength());
-        ex.getResponseBody().write(res.getEntity().getBytes());
+        ex.getResponseBody().write(res.getEntity());
         ex.close();
     }
 

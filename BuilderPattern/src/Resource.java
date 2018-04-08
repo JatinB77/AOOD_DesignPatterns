@@ -22,6 +22,12 @@ public class Resource {
         return null;
     }
 
+    @Path("/favicon.ico")
+    public Response getFavicon(Request req) {
+        return Response.ok().entity(
+            readFile(new File("static/assets/favicon.ico"))).build();
+    }
+
     @Path("/static")
     public Response serveStatic(Request req) {
         Response.Builder response;
@@ -41,7 +47,6 @@ public class Resource {
                     .ok()
                     .entity(readFile(file))
                     .type(Files.probeContentType(file.toPath()));
-                System.out.println(Files.probeContentType(file.toPath()));
             }
             else
                 response = Response
@@ -56,10 +61,13 @@ public class Resource {
         return response.build();
     }
 
-    public static String readFile(File file) throws IOException {
-        return Files
-            .readAllLines(file.toPath())
-            .stream()
-            .collect(Collectors.joining("\n"));
+    public static byte[] readFile(File file) {
+        try {
+            return Files.readAllBytes(file.toPath());
+        }
+        catch (IOException ex) {
+            ex.printStackTrace();
+            return null;
+        }
     }
 }

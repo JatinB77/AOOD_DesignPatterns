@@ -25,7 +25,7 @@ public class Response {
 
         private int status;
         private Headers headers = new Headers();
-        private String body = "";
+        private byte[] body;
 
         public Response build() {
             Response res = new Response();
@@ -37,8 +37,13 @@ public class Response {
             return res;
         }
 
+        public Builder entity(byte[] entity) {
+            body = entity;
+            return this;
+        }
+
         public Builder entity(Object entity) {
-            body += entity.toString();
+            body = entity.toString().getBytes();
             return this;
         }
 
@@ -86,7 +91,7 @@ public class Response {
 
     private int status;
     private Headers headers;
-    private String body;
+    private byte[] body;
 
     private Response() { }
 
@@ -98,16 +103,16 @@ public class Response {
         return headers;
     }
 
-    public String getEntity() {
+    public byte[] getEntity() {
         return body;
     }
 
     public boolean hasEntity() {
-        return !body.isEmpty();
+        return body != null;
     }
 
     public long getLength() {
-        return body.getBytes().length;
+        return body.length;
     }
 
     public String getMediaType() {
