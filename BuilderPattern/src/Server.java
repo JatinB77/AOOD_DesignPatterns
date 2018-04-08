@@ -8,35 +8,48 @@ import java.util.function.Supplier;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpServer;
 
+/**
+ * A simple HTTP server.
+ */
 public class Server {
 
+    private static final String host = "localhost";
     private static final int port = 8000;
-    private static BufferedReader stdin = new BufferedReader(
-        new InputStreamReader(System.in));
 
+    /**
+     * Creates and runs an HTTP server instance.
+     */
     public static void main(String... args) throws IOException {
         HttpServer server = HttpServer.create(
-            new InetSocketAddress("localhost", port), 0);
+            new InetSocketAddress(host, port), 0);
 
         assignContext(server, new Resource());
         server.setExecutor(null);
 
         server.start();
-        System.out.println("Server running on http://localhost:" + port);
+        System.out.println(String.format("Server running on http://%s:%d",
+            host, port));
 
+        // Type Ctrl-d to stop server.
+        BufferedReader stdin = new BufferedReader(
+            new InputStreamReader(System.in));
         while (stdin.readLine() != null);
         server.stop(0);
     }
 
-    private static void log(HttpExchange ex) {
-        System.out.println(String.format(
-            "[%s] %s", ex.getRequestMethod(), ex.getRequestURI()));
+    /**
+     * Log an incoming HTTP request.
+     */
+    private static void log(Request req) {
+        System.out.println(String.format("[%s] %s",
+            req.getRequestMethod(), req.getRequestURI()));
     }
 
+    /**
+     * Send response data to the client.
+     */
     private static void handleExchange(HttpExchange ex, Response res)
             throws IOException {
-        log(ex);
-
         if (res == null)
             res = Response
                 .serverError()
@@ -49,6 +62,10 @@ public class Server {
         ex.close();
     }
 
+    /**
+     * Assign handlers to server endpoints present in the specified Resource
+     * instance.
+     */
     private static void assignContext(HttpServer server, Resource resource) {
         Method[] methods = resource.getClass().getMethods();
 
@@ -57,14 +74,20 @@ public class Server {
 
             if (path != null && method.getReturnType().equals(Response.class))
                 server.createContext(path.value(), exchange -> {
+                    // Delegate 'exchange' behavior to separate 'request'
+                    // and 'response' objects for demonstration purposes.
+                    Request req = new Request(exchange);
                     Response res = null;
+
+                    log(req);
+
                     try {
-                        res = (Response) method.invoke(resource,
-                            new Request(exchange));
+                        res = (Response) method.invoke(resource, req);
                     }
                     catch (Exception ex) {
                         ex.printStackTrace();
                     }
+
                     handleExchange(exchange, res);
                 });
         }

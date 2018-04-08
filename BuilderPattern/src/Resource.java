@@ -24,8 +24,19 @@ public class Resource {
 
     @Path("/favicon.ico")
     public Response getFavicon(Request req) {
-        return Response.ok().entity(
-            readFile(new File("static/assets/favicon.ico"))).build();
+        Response.Builder response;
+
+        try {
+            response = Response
+                .ok()
+                .entity(readFile(new File("static/assets/favicon.ico")));
+        }
+        catch (IOException ex) {
+            ex.printStackTrace();
+            response = Response.serverError();
+        }
+
+        return response.build();
     }
 
     @Path("/static")
@@ -55,19 +66,15 @@ public class Resource {
         }
         catch (IOException ex) {
             ex.printStackTrace();
-            response = Response.serverError();
+            response = Response
+                .serverError()
+                .entity("Could not read file");
         }
 
         return response.build();
     }
 
-    public static byte[] readFile(File file) {
-        try {
-            return Files.readAllBytes(file.toPath());
-        }
-        catch (IOException ex) {
-            ex.printStackTrace();
-            return null;
-        }
+    private static byte[] readFile(File file) throws IOException {
+        return Files.readAllBytes(file.toPath());
     }
 }
