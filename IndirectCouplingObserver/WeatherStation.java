@@ -7,12 +7,11 @@ public class WeatherStation {
     private WeatherData data;
 
     public WeatherStation() {
-        manager = new Manager();
         data = new WeatherData();
     }
 
-    public void addListener(Object listener) {
-        manager.addListener(listener);
+    public void setManager(Manager manager) {
+        this.manager = manager;
     }
 
     public void update(float temperature, float humidity, float pressure) {
