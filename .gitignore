@@ -1,5 +1,6 @@
 *.class
 *.iml
+*.swp
 .DS_Store
 .drivers
 .idea/
