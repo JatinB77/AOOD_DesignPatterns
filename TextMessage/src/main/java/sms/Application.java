@@ -6,8 +6,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import java.util.HashMap;
-
 @SpringBootApplication
 public class Application implements CommandLineRunner {
 
@@ -27,12 +25,10 @@ public class Application implements CommandLineRunner {
             "name VARCHAR(128), " +
             "number VARCHAR(12))"
         );
-        HashMap<String, String> contacts = new HashMap<>();
-        contacts.put("johan", "+13025215161");
         jdbcTemplate.execute(String.format(
             "INSERT INTO phone_numbers (name, number) VALUES ('%s', '%s')",
-            "johan",
-            contacts.get("johan")
+            "test_user",
+            System.getenv().get("PHONE")
         ));
     }
 }
