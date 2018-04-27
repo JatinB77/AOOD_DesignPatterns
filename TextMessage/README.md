@@ -1,0 +1,43 @@
+# SMS Microservice
+
+Sending a text message requires a [Twilio](https://www.twilio.com/) account.
+
+## Environment Variables
+
+Before running the server, make sure you have the following environment
+variables defined:
+
+    * `TWILIO_SID`: Your Twilio account sid.
+    * `TWILIO_TOKEN`: Your Twilio authentication token.
+    * `TWILIO_POHONE`: A Twilio phone number from which sms can be sent.
+
+If using this service with Docker, the environment variables must be
+forwarded into the container. The variables are already identified in
+the `env.list`. If the variables are defined in your system, run the docker
+container with:
+
+```bash
+docker run -p 8080:8080 --env-file env.list sms
+```
+
+Send a message by sending a POST request to `/send?to=<number>`, where
+`number` is the phone number to send the text to.
+
+Note that the phone number must be in E.164 format.
+
+A US-based number in standard local formatting: **(415) 555-2671**
+
+The same number in E.164 format: **+14155552671**
+
+Since the number is given to this microservice in the form of a URL query
+parameter, the plus sign should be encoded to avoid problems.
+
+To do this in Java,
+
+```java
+import java.net.URLEncoder;
+...
+String phone = "+14155552671";
+String queryParam = URLEncoder.encode(phone, "UTF-8");
+return "/send?to=" + queryParam;
+```
