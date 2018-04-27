@@ -20,17 +20,24 @@ container with:
 docker run -p 8080:8080 --env-file env.list sms
 ```
 
-Send a message by sending a POST request to `/send?to=<number>`, where
-`number` is the phone number to send the text to.
+## Send a message!
 
-Note that the phone number must be in E.164 format.
+Send a message by making a POST request to `/send?to=<number>`, where
+`<number>` is the sms destination.
+
+The body of the request will be the contents of the message.
+
+## Phone Number Format
+
+The phone number must be in **E.164 format**.
 
 A US-based number in standard local formatting: **(415) 555-2671**
 
 The same number in E.164 format: **+14155552671**
 
-Since the number is given to this microservice in the form of a URL query
-parameter, the plus sign should be encoded to avoid problems.
+A plus sign in a URL query parameter represents a space. Since this is the way
+in which the number is given to the service, the plus sign
+should be encoded to avoid problems.
 
 To do this in Java,
 
