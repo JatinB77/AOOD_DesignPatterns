@@ -7,9 +7,9 @@ Sending a text message requires a [Twilio](https://www.twilio.com/) account.
 Before running the server, make sure you have the following environment
 variables defined:
 
-    * `TWILIO_SID`: Your Twilio account sid.
-    * `TWILIO_TOKEN`: Your Twilio authentication token.
-    * `TWILIO_POHONE`: A Twilio phone number from which sms can be sent.
+* `TWILIO_SID`: Your Twilio account sid.
+* `TWILIO_TOKEN`: Your Twilio authentication token.
+* `TWILIO_POHONE`: A Twilio phone number from which sms can be sent.
 
 If using this service with Docker, the environment variables must be
 forwarded into the container. The variables are already identified in
