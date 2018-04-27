@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.twilio.rest.api.v2010.account.Message;
+
 @RestController
 public class SmsController {
 
@@ -19,9 +21,9 @@ public class SmsController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/send")
-    public String send(
+    public Message send(
             @RequestParam(value="to") String to,
             @RequestBody String message) {
-        return "Message status: " + smsService.send(to, message).getStatus();
+        return smsService.send(to, message);
     }
 }
