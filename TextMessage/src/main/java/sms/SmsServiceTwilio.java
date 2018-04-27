@@ -15,10 +15,9 @@ public class SmsServiceTwilio implements SmsService {
     public SmsServiceTwilio() {
         Map<String, String> env = System.getenv();
 
-        senderNumber = new PhoneNumber(env.get("TWILIO_PHONE"));
-
         accountSid = env.get("TWILIO_SID");
         authToken = env.get("TWILIO_TOKEN");
+        senderNumber = new PhoneNumber(env.get("TWILIO_PHONE"));
 
         Twilio.init(accountSid, authToken);
     }
