@@ -24,10 +24,7 @@ public class SmsController {
     public String send(
             @RequestParam(value="to") String to,
             @RequestBody String message) {
-        if (to != null) {
-            smsService.send(to, message);
-            return "OK";
-        }
-        else return "No to message";
+        smsService.send(to, message);
+        return "OK";
     }
 }

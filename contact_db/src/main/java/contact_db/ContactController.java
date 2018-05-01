@@ -64,7 +64,10 @@ public class ContactController {
                 String.class,
                 variables
             );
-        return "Message sent!";
+        if (response.equals("OK"))
+            return "Message sent!";
+        else
+            return "Problem sending message";
     }
 
     @RequestMapping("/message")
