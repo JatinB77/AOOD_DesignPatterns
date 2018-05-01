@@ -33,7 +33,7 @@ public class ContactController {
         return "OK";
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/remove_contact")
+    @RequestMapping(method = RequestMethod.DELETE, value = "/remove_contact")
     public String removeContact(
             @RequestParam(value="name") String name
     ) {
