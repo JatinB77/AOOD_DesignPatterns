@@ -7,8 +7,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.Dictionary;
+import java.util.HashMap;
 
 @RestController
 public class ContactController {
@@ -47,17 +49,18 @@ public class ContactController {
         ), new Object[]{}, String.class);
         return phone;
     }
-	
-	@RequestMapping(method = RequestMethod.POST, value = "/send_message")
+
+    @RequestMapping(method = RequestMethod.POST, value = "/send_message")
     public String sendMessage(
-            @RequestParam(value="name") String name
+            @RequestParam(value="name") String name,
+            @RequestBody String message
     )
     {
         String number = getNumber(name);
         RestTemplate template = new RestTemplate();
         HashMap<String,String> variables = new HashMap<>();
         variables.put("name", name);
-        template.postForObject("172.18.0.3/send/", null, Void.class, variables);
+        template.postForObject("sms/send/", message, Void.class, variables);
         return "OK";
     }
 }
