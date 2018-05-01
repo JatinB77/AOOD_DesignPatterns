@@ -47,4 +47,17 @@ public class ContactController {
         ), new Object[]{}, String.class);
         return phone;
     }
+	
+	@RequestMapping(method = RequestMethod.POST, value = "/send_message")
+    public String sendMessage(
+            @RequestParam(value="name") String name
+    )
+    {
+        String number = getNumber(name);
+        RestTemplate template = new RestTemplate();
+        HashMap<String,String> variables = new HashMap<>();
+        variables.put("name", name);
+        template.postForObject("172.18.0.3/send/", null, Void.class, variables);
+        return "OK";
+    }
 }
