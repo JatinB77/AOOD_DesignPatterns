@@ -21,9 +21,13 @@ public class SmsController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/send")
-    public Message send(
+    public String send(
             @RequestParam(value="to") String to,
             @RequestBody String message) {
-        return smsService.send(to, message);
+        if (to != null) {
+            smsService.send(to, message);
+            return "OK";
+        }
+        else return "No to message";
     }
 }
